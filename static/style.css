@@ -1,0 +1,18 @@
+body {
+  background-color: #f8bbd0;
+  font-family: Arial;
+}
+
+h1 {
+  font-size: 25px;
+  font-family: Arial;
+}
+
+li {
+  font-size: 24px;
+}
+
+img {
+  width: 120px;
+  display: grid;
+}
