@@ -1,17 +1,34 @@
 <!DOCTYPE html>
-<html>
+https://github.com/csc4351-f22/hw6-hhassan6/pull/3/conflict?name=main.py&ancestor_oid=52cbac2651d4a937cf9a197ac4a8a00f72ca0f1a&base_oid=c15f31df9c7068fa0cd6b7b1db94053398321ea8&head_oid=5d548cef523dfac698f8be33b34afd068b7ae1b1<html>
   <head>
-    <title>HW6</title>
-    <link rel="stylesheet" href="static/style.css" />
+    <link href="/static/style.css" rel="stylesheet" />
   </head>
-
   <body>
-    <h1>Hafsa's favorite books are:</h1>
-    <li>{{Books[title]}}</li>
-    <img src="{{imagelist[images]}}" />
-    <form method="get" action="/">
+    <form method="GET" action="/">
       <input type="text" name="term" />
-      <input type="submit" value="search🔍" />
+      <input type="submit" value="Search🔍" />
     </form>
+    <h1>Books📖:</h1>
+    <ol>
+      {%for i in range(5)%}
+      <li>
+        Title<br />{{ggtitles[i]}}<br />
+        <img src="{{ggimages[i]}}" />
+        Author<br />{{ggauthors[i]}}<br />
+        Subtitle<br />{{ggsubtitles[i]}}<br />
+      </li>
+      {%endfor%}
+    </ol>
+
+    <h1>Hafsa's favorite books are:</h1>
+    <ol>
+      {% for i in range(5) %} {% if titles[i] == "To Kill a Mockingbird" %}
+      <li style="color: green">{{titles[i]}}</li>
+      <img src="{{images[i]}}" />
+      {% else %}
+      <li>{{titles[i]}}</li>
+      <img src="{{images[i]}}" />
+      {% endif %} {% endfor %}
+    </ol>
   </body>
 </html>
