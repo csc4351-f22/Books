@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HW6</title>
-
-    <link rel="stylesheet" href="static/style.css" />
+    <link href="/static/style.css" rel="stylesheet" />
   </head>
   <body>
+    <form method="GET" action="/">
+      <input type="text" name="term" />
+      <input type="submit" value="Search🔍" />
+    </form>
+    <h1>Books📖:</h1>
+    <ol>
+      {%for i in range(5)%}
+      <li>
+        Title<br />{{ggtitles[i]}}<br />
+        <img src="{{ggimages[i]}}" />
+        Author<br />{{ggauthors[i]}}<br />
+        Subtitle<br />{{ggsubtitles[i]}}<br />
+      </li>
+      {%endfor%}
+    </ol>
+
     <h1>Hafsa's favorite books are:</h1>
     <ol>
-      {% for i in range(0, len) %} {% if Books[i] == "To Kill a Mockingbird" %}
-      <li style="color: green">{{Books[i]}}</li>
-      <img src="{{imagelist[i]}}" />
+      {% for i in range(5) %} {% if titles[i] == "To Kill a Mockingbird" %}
+      <li style="color: green">{{titles[i]}}</li>
+      <img src="{{images[i]}}" />
       {% else %}
-      <li>{{Books[i]}}</li>
-      <img src="{{imagelist[i]}}" />
+      <li>{{titles[i]}}</li>
+      <img src="{{images[i]}}" />
       {% endif %} {% endfor %}
     </ol>
   </body>
