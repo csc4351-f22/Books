@@ -1,9 +1,11 @@
 import flask
 import requests
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 API_KEY="AIzaSyAzQ4m3dQxsPBIOXjh0JFvZwunq3ekfeIU"
 
-querys = ["Harry potter", "To Sleep in a Sea of Stars", "Silent Patient", "To Kill a Mockingbird", "Throne of Glass"]
+querys = ["Harry potter deathly", "To Sleep in a Sea of Stars", "Silent Patient", "To Kill a Mockingbird", "Throne of Glass"]
 
 titles = []
 images = []
@@ -12,7 +14,6 @@ ggtitles=[]
 ggauthors=[]
 ggimages=[]
 ggsubtitles=[]
-
 
 for query in querys:
     response = requests.get(
@@ -26,10 +27,52 @@ for query in querys:
 
 app = flask.Flask(__name__)
 
-books = ["Harry potter", "To Sleep in a Sea of Stars", "Silent Patient", "To Kill a Mockingbird", "The River and The Source"]
+books = ["Harry potter", "To Sleep in a Sea of Stars", "Silent Patient", "To Kill a Mockingbird", "Throne of Glass"]
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "database.db")
+
+db = SQLAlchemy(app)
+
+class Booksbase(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Title = db.Column(db.String(80))
+    Subtitle = db.Column(db.String(80))
+    Author = db.Column(db.String(80))
+    Thumbnail = db.Column(db.String(80))
+
+with app.app_context():
+    db.create_all()
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    if flask.request.method =="POST":
+        data = flask.request.form
+        new_Books = Booksbase(
+            Title = data["Title"],
+            Subtitle = data["Subtitle"],
+            Author = data["Author"],
+            Thumbnail = data["Thumbnail"]
+        )
+        db.session.add(new_Books)
+        db.session.commit()
+        return flask.redirect("/")
+
+@app.route("/delete", methods = ["POST"])
+def delete(): 
+    Title_to_delete = flask.request.form.get('title_book')
+    to_delete = Booksbase.query.filter_by(Title = Title_to_delete).first()
+    db.session.delete(to_delete)
+    db.session.commit()
+    return flask.redirect("/")
 
 @app.route("/")
 def index():
+    ggtitles=[]
+    ggauthors=[]
+    ggimages=[]
+    ggsubtitles=[]
 
     form_data = flask.request.args
 
@@ -40,11 +83,12 @@ def index():
     Query = form_data.get("term", "")
 
     response = requests.get(
-    "https://www.googleapis.com/books/v1/volumes", 
+
+    "https://www.googleapis.com/books/v1/volumes?", 
     params={"q": Query, "key": API_KEY}
     )
     response = response.json()
-    
+
     # https://www.w3schools.com/python/python_try_except.asp
     # https://www.geeksforgeeks.org/python-try-except/
 
@@ -57,7 +101,8 @@ def index():
         except:
             print("")
         try:
-            ggsubtitles.append(response["items"][i]['volumeInfo']['subtitles'])
+            ggsubtitles.append(response["items"][i]['volumeInfo']['subtitle'])
+
         except:
             print("error for subtitle")
 
@@ -71,11 +116,12 @@ def index():
             print("error for image")
         
 
-
+    data_titles = Booksbase.query.all()
+    fav_books = len(data_titles)
     return flask.render_template(
         "index.html", 
-        titles=titles, 
-        images=images,
+        data_titles=data_titles, 
+        fav_books=fav_books,
         ggtitles=ggtitles,
         ggauthors = ggauthors,
         ggimages =ggimages,
