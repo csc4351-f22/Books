@@ -83,6 +83,7 @@ def index():
     Query = form_data.get("term", "")
 
     response = requests.get(
+
     "https://www.googleapis.com/books/v1/volumes?", 
     params={"q": Query, "key": API_KEY}
     )
@@ -101,6 +102,7 @@ def index():
             print("")
         try:
             ggsubtitles.append(response["items"][i]['volumeInfo']['subtitle'])
+
         except:
             print("error for subtitle")
 
@@ -113,6 +115,7 @@ def index():
         except:
             print("error for image")
         
+
     data_titles = Booksbase.query.all()
     fav_books = len(data_titles)
     return flask.render_template(
