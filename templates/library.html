@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" />
+    <title>Library</title>
+</head>
+<body>
+    
+    <h1>Library Books:</h1>
+    <a href="/">
+        <button>Search for Books</button>
+    </a>
+    <ol>
+        {% if data_titles %}
+        {% for i in range(fav_books) %}
+        <li>
+            {{data_titles[i].Title}}
+            <img src="{{data_titles[i].Thumbnail}}" />
+            Author<br />
+            {% if ',' in data_titles[i].Author %}
+            {{ data_titles[i].Author }}
+            {% else %}
+            {{ data_titles[i].Author | replace(', ', '') }}
+            {% endif %}<br />
+            Subtitle<br />{{data_titles[i].Subtitle}}<br />
+    
+            <form method="POST" action="/delete">
+                <input type="hidden" name="title_book" value="{{data_titles[i].Title}}" />
+                <input type="submit" value="Delete" />
+            </form>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ol>
+</body>
+</html>

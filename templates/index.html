@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-https://github.com/csc4351-f22/hw6-hhassan6/pull/3/conflict?name=main.py&ancestor_oid=52cbac2651d4a937cf9a197ac4a8a00f72ca0f1a&base_oid=c15f31df9c7068fa0cd6b7b1db94053398321ea8&head_oid=5d548cef523dfac698f8be33b34afd068b7ae1b1<html>
+<html>
   <head>
     <link href="/static/style.css" rel="stylesheet" />
   </head>
@@ -10,61 +10,35 @@ https://github.com/csc4351-f22/hw6-hhassan6/pull/3/conflict?name=main.py&ancesto
       <input type="text" name="term" />
       <input type="submit" value="Search🔍" />
     </form>
-    
+
+    <a href="/library">
+      <button>Go to Library</button>
+    </a>
+
     <ol>
-      {%for i in range(5)%}
+      {% if ggtitles %}
+      {% for i in range(5) %}
       <li>
         Title<br />{{ggtitles[i]}}<br />
         <img src="{{ggimages[i]}}" />
-        Author<br />{{ggauthors[i]}}<br />
+        Author<br />{{(ggauthors[i]) }}<br />
         Subtitle<br />{{ggsubtitles[i]}}<br />
       </li>
-
+    
       <form method="POST" action="/add">
         <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden -->
-
+    
         <input type="hidden" name="Title" value="{{ggtitles[i]}}" />
         <input type="hidden" name="Thumbnail" value="{{ggimages[i]}}" />
         <input type="hidden" name="Author" value="{{ggauthors[i]}}" />
         <input type="hidden" name="Subtitle" value="{{ggsubtitles[i]}}" />
-        <input type="submit" value="Add to My Books" />
-      </form>
-      {%endfor%}
-    </ol>
-
-    <h1>Hafsa's favorite books are:</h1>
-    <ol>
-      {% for i in range(fav_books) %} {% if data_titles[i].Title == "To Kill a
-      Mockingbird" %}
-      <li style="color: green">{{data_titles[i].Title}}</li>
-      <img src="{{data_titles[i].Thumbnail}}" />
-      Author
-      <br />
-      {{data_titles[i].Author}}<br />
-      Subtitle
-      <br />
-      {{data_titles[i].Subtitle}}<br />
-
-      {% else %}
-      <li>{{data_titles[i].Title}}</li>
-      <img src="{{data_titles[i].Thumbnail}}" />
-      Author
-      <br />
-      {{data_titles[i].Author}}<br />
-      Subtitle
-      <br />
-      {{data_titles[i].Subtitle}}<br />
-
-      {% endif %}
-      <form method="POST" action="/delete">
-        <input
-          type="hidden"
-          name="title_book"
-          value="{{data_titles[i].Title}}"
-        />
-        <input type="submit" value="Delete" />
+        <input type="submit" value="Add to My Library" />
       </form>
       {% endfor %}
+      {% endif %}
     </ol>
+
+    
+  
   </body>
 </html>

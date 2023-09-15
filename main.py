@@ -33,15 +33,18 @@ with app.app_context():
 def add():
     if flask.request.method == "POST":
         data = flask.request.form
+        authors = data.getlist("Author")
+        # Join the author names with commas
+        author_str = ', '.join(authors)
         new_Books = Booksbase(
-            Title=data["Title"],
-            Subtitle=data["Subtitle"],
-            Author=data["Author"],
-            Thumbnail=data["Thumbnail"]
+            Title=data.get("Title"),
+            Subtitle=data.get("Subtitle"),
+            Author=author_str,
+            Thumbnail=data.get("Thumbnail")
         )
         db.session.add(new_Books)
         db.session.commit()
-        return flask.redirect("/")
+        return flask.redirect("/library")
 
 
 @app.route("/delete", methods=["POST"])
@@ -50,10 +53,10 @@ def delete():
     to_delete = Booksbase.query.filter_by(Title=Title_to_delete).first()
     db.session.delete(to_delete)
     db.session.commit()
-    return flask.redirect("/")
+    return flask.redirect("/library")
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     ggtitles = []
     ggauthors = []
@@ -93,7 +96,9 @@ def index():
             print("error for subtitle")
 
         try:
-            ggauthors.append(response["items"][i]['volumeInfo']['authors'])
+            ggauthors.append(
+                ', '.join(response["items"][i]['volumeInfo']['authors']))
+
         except:
             print("")
         try:
@@ -102,10 +107,26 @@ def index():
         except:
             print("error for image")
 
+    return flask.render_template(
+        "index.html",
+        ggtitles=ggtitles,
+        ggauthors=ggauthors,
+        ggimages=ggimages,
+        ggsubtitles=ggsubtitles
+    )
+
+
+@app.route("/library/", methods=["GET", "POST"])
+def Library():
+    ggtitles = []
+    ggauthors = []
+    ggimages = []
+    ggsubtitles = []
+
     data_titles = Booksbase.query.all()
     fav_books = len(data_titles)
     return flask.render_template(
-        "index.html",
+        "library.html",
         data_titles=data_titles,
         fav_books=fav_books,
         ggtitles=ggtitles,
