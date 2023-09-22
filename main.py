@@ -11,7 +11,8 @@ app = flask.Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgres: // lwyipltpevmqly: ad4c58880a29e1bbf9b193a639e7b4fe7deef31e354d6383c65f0538c71cf5be@ec2-54-208-11-146.compute-1.amazonaws.com: 5432/d3uk7d3m4b58gm"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
+    os.path.join(basedir, "database.db")
 
 db = SQLAlchemy(app)
 
@@ -61,6 +62,7 @@ def index():
     ggauthors = []
     ggimages = []
     ggsubtitles = []
+    maxBooks = 9
 
     form_data = flask.request.args
 
@@ -83,7 +85,7 @@ def index():
     # i used try and except because it gives me KeyError: 'imageLinks' or 'subtitles'
     # which means that some books do not have those information
 
-    for i in range(5):
+    for i in range(maxBooks):
         try:
             ggtitles.append(response["items"][i]['volumeInfo']['title'])
         except:
@@ -111,7 +113,8 @@ def index():
         ggtitles=ggtitles,
         ggauthors=ggauthors,
         ggimages=ggimages,
-        ggsubtitles=ggsubtitles
+        ggsubtitles=ggsubtitles,
+        maxBooks=maxBooks
     )
 
 

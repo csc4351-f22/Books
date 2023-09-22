@@ -7,7 +7,6 @@
     <title>Books</title>
   </head>
   <body>
-    <h1>Books:</h1>
     <div class="container">
       <div class="wrapper">
 
@@ -21,17 +20,16 @@
               
             </div> 
 
-            
             <div class="col-3">
               <input 
               type="submit" 
               value="Search" 
-              class="form-control btn btn-primary shadow-sm" />
+              class="form-control btn btn-secondary shadow-sm" />
             </div>
 
             <div class="col-3">
               <a href="/library">
-                <button type="button" class="btn btn-info">Library</button>
+                <button type="button" class="btn btn-warning">Library</button>
               </a>
             </div>
 
@@ -39,32 +37,48 @@
         </form>
 
         
+        <div class="container">
+          <div class="row">
+            {% if ggtitles %}
+            {% for i in range(maxBooks) %}
+            <div class="book-wrap">
+              <ul>
+                <li>
+                  <div class="d-flex book-details">
+                    <span class="image">
+                      <img src="{{ggimages[i]}}" />
+                    </span>
+                    <div class= "info">
+                      <span class="title">
+                        Title: {{ggtitles[i]}}
+                      </span>
+                      
+                      <span class="author">
+                        Author: {{(ggauthors[i]) }}
+                      </span>
+                      {%if ggsubtitles[i] %}
+                      <span class="subtitle">
+                        Subtitle: {{ggsubtitles[i]}}
+                      </span>
+                      {%endif%}
+                    </div>
+                  </div>
+                </li>
 
-        <ol>
-          {% if ggtitles %}
-          {% for i in range(5) %}
-          <li>
-            Title<br />{{ggtitles[i]}}<br />
-            <img src="{{ggimages[i]}}" />
-            Author<br />{{(ggauthors[i]) }}<br />
-            Subtitle<br />{{ggsubtitles[i]}}<br />
-          </li>
-        
-          <form method="POST" action="/add">
-            <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden -->
-        
-            <input type="hidden" name="Title" value="{{ggtitles[i]}}" />
-            <input type="hidden" name="Thumbnail" value="{{ggimages[i]}}" />
-            <input type="hidden" name="Author" value="{{ggauthors[i]}}" />
-            <input type="hidden" name="Subtitle" value="{{ggsubtitles[i]}}" />
-            <input type="submit" value="Add to My Library" />
-          </form>
-          {% endfor %}
-          {% endif %}
-        </ol>
+                <form class="add-library" method="POST" action="/add">
+                  <input type="hidden" name="Title" value="{{ggtitles[i]}}" />
+                  <input type="hidden" name="Thumbnail" value="{{ggimages[i]}}" />
+                  <input type="hidden" name="Author" value="{{ggauthors[i]}}" />
+                  <input type="hidden" name="Subtitle" value="{{ggsubtitles[i]}}" />
+                  <input type="submit" value="Add to My Library" />
+                </form>
+              </ul>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
-    
-  
   </body>
 </html>

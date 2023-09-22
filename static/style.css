@@ -1,6 +1,6 @@
 body {
-  background-color: #f8bbd0;
   font-family: Arial;
+  background-color: rgb(245, 239, 233);
 }
 
 h1 {
@@ -8,11 +8,58 @@ h1 {
   font-family: Arial;
 }
 
+ul {
+  margin: 10px;
+  padding: 5px;
+}
+
 li {
-  font-size: 24px;
+  color: #060606;
+  font-weight: 100;
+  list-style: none;
+  font-size: 17px;
+  line-height: 1;
+  margin: 20px;
 }
 
 img {
   width: 120px;
   display: grid;
+  margin-right: 20px;
 }
+
+.search-form {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.add-library{
+  margin: 20px;
+  
+}
+
+.book-wrap {
+  padding: 10px;
+  border: 1px solid #b5b6b8;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #E1DCC5;
+  
+}
+
+.book-details {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.title,
+.author,
+.subtitle {
+  display: block;
+  margin-bottom: 5px;
+  
+}
+
+
