@@ -22,6 +22,7 @@ class Booksbase(db.Model):
     Title = db.Column(db.String(80))
     Subtitle = db.Column(db.String(80))
     Author = db.Column(db.String(80))
+    Description = db.Column(db.String(500))
     Thumbnail = db.Column(db.String(80))
 
 
@@ -40,6 +41,7 @@ def add():
             Title=data.get("Title"),
             Subtitle=data.get("Subtitle"),
             Author=author_str,
+            Description=data.get("Description"),
             Thumbnail=data.get("Thumbnail")
         )
         db.session.add(new_Books)
@@ -62,6 +64,7 @@ def index():
     ggauthors = []
     ggimages = []
     ggsubtitles = []
+    ggdescription = []
     maxBooks = 9
 
     form_data = flask.request.args
@@ -78,6 +81,8 @@ def index():
         params={"q": Query, "key": APIKEY}
     )
     response = response.json()
+
+    print(response)
 
     # https://www.w3schools.com/python/python_try_except.asp
     # https://www.geeksforgeeks.org/python-try-except/
@@ -102,11 +107,19 @@ def index():
 
         except:
             print("")
+
         try:
             ggimages.append(response["items"][i]
                             ['volumeInfo']['imageLinks']['thumbnail'])
         except:
             print("error for image")
+
+        try:
+            ggdescription.append(response["items"][i]
+                            ['volumeInfo']['description'])
+        except:
+            print("error for image")
+
 
     return flask.render_template(
         "index.html",
@@ -114,6 +127,7 @@ def index():
         ggauthors=ggauthors,
         ggimages=ggimages,
         ggsubtitles=ggsubtitles,
+        ggdescription=ggdescription,
         maxBooks=maxBooks
     )
 
@@ -124,6 +138,7 @@ def Library():
     ggauthors = []
     ggimages = []
     ggsubtitles = []
+    ggdescription = []
 
     data_titles = Booksbase.query.all()
     fav_books = len(data_titles)
@@ -134,7 +149,8 @@ def Library():
         ggtitles=ggtitles,
         ggauthors=ggauthors,
         ggimages=ggimages,
-        ggsubtitles=ggsubtitles
+        ggsubtitles=ggsubtitles,
+        ggdescription=ggdescription,
     )
 
 app.run(use_reloader=True, debug=True)

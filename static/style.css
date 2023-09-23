@@ -1,11 +1,11 @@
 body {
-  font-family: Arial;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background-color: rgb(245, 239, 233);
 }
 
-h1 {
+h1{
   font-size: 25px;
-  font-family: Arial;
+  font-family: "Segoe Script";
 }
 
 ul {
@@ -14,7 +14,6 @@ ul {
 }
 
 li {
-  color: #060606;
   font-weight: 100;
   list-style: none;
   font-size: 17px;
@@ -28,14 +27,32 @@ img {
   margin-right: 20px;
 }
 
-.search-form {
-  padding: 10px;
-  margin-bottom: 20px;
+.library-wrap{
+  margin: 30px 0 30px 0;
+  padding: 0 0 0 100px;
 }
 
-.add-library{
-  margin: 20px;
-  
+.search-wrap {
+  padding: 50px;
+  margin: 30px 0 30px 0;
+}
+
+.search-library button{
+  padding: 6px 40px;
+  border: 1px solid #b5b6b8;
+  border-radius: 5px;
+  background-color: #e4daaf;
+  color: rgb(51, 47, 43);
+}
+
+form.add-library input[type="submit"] {
+  margin: 50px;
+  padding: 10px 40px;
+  border: 1px solid #b5b6b8;
+  border-radius: 5px;
+  background-color: rgb(228, 153, 126);
+  color: rgb(51, 47, 43);
+
 }
 
 .book-wrap {
@@ -43,7 +60,7 @@ img {
   border: 1px solid #b5b6b8;
   border-radius: 5px;
   margin: 10px;
-  background-color: #E1DCC5;
+  background-color: rgb(234, 203, 191);
   
 }
 
@@ -56,10 +73,22 @@ img {
 
 .title,
 .author,
-.subtitle {
+.subtitle,
+.description {
+  color: rgb(71, 67, 63);
   display: block;
   margin-bottom: 5px;
   
+}
+
+form.delete input[type="submit"]{
+  margin: 50px;
+  padding: 10px 40px;
+  border: 1px solid #b5b6b8;
+  border-radius: 5px;
+  background-color: rgb(228, 153, 126);
+  color: rgb(51, 47, 43);
+
 }
 
 

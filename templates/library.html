@@ -10,33 +10,68 @@
 </head>
 <body>
     
-    <h1>Library Books:</h1>
-    <div class="library">
-        <a href="/">
-            <button type="button" class="btn btn-info">search</button>
-        </a>
+    <div class="container">
+        <div class="wrapper">
+
+            <div class="d-flex library-wrap">
+                <div class="col-6 name">
+                    <h1>Lookup Library</h1>
+                </div>
+                <div class="col-3 search-library">
+                    <a href="/">
+                        <button 
+                        type="button">search</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    {% if data_titles %}
+                    {% for i in range(fav_books) %}
+                    <div class="book-wrap">
+                        <ul>
+                            <li>
+                                <div class="d-flex book-details">
+                                    <span class="image">
+                                        <img src="{{data_titles[i].Thumbnail}}" />
+                                    </span>
+                                    <div class="info">
+                                        <span class="title">
+                                            Title: {{data_titles[i].Title}}
+                                        </span>
+                                    
+                                        <span class="author">
+                                            Author: {% if ',' in data_titles[i].Author %}
+                                                    {{ data_titles[i].Author }}
+                                                    {% else %}
+                                                    {{ data_titles[i].Author | replace(', ', '') }}
+                                                    {% endif %}
+                                        </span>
+                                        {%if ggsubtitles[i] %}
+                                        <span class="subtitle">
+                                            Subtitle: {{data_titles[i].Subtitle}}
+                                        </span>
+                                        {%endif%}
+
+                                        <span class="title">
+                                            Title: {{data_titles[i].Description}}
+                                        </span>
+
+                                    </div>
+                                </div>    
+                            </li>
+                            <form class="delete" method="POST" action="/delete">
+                                <input type="hidden" name="title_book" value="{{data_titles[i].Title}}" />
+                                <input type="submit" value="Delete" />
+                            </form>
+                        </ul>
+                    </div>    
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-    <ol>
-        {% if data_titles %}
-        {% for i in range(fav_books) %}
-        <li>
-            {{data_titles[i].Title}}
-            <img src="{{data_titles[i].Thumbnail}}" />
-            Author<br />
-            {% if ',' in data_titles[i].Author %}
-            {{ data_titles[i].Author }}
-            {% else %}
-            {{ data_titles[i].Author | replace(', ', '') }}
-            {% endif %}<br />
-            Subtitle<br />{{data_titles[i].Subtitle}}<br />
-    
-            <form method="POST" action="/delete">
-                <input type="hidden" name="title_book" value="{{data_titles[i].Title}}" />
-                <input type="submit" value="Delete" />
-            </form>
-        </li>
-        {% endfor %}
-        {% endif %}
-    </ol>
 </body>
 </html>
