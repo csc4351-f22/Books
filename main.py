@@ -82,7 +82,6 @@ def index():
     )
     response = response.json()
 
-    print(response)
 
     # https://www.w3schools.com/python/python_try_except.asp
     # https://www.geeksforgeeks.org/python-try-except/
