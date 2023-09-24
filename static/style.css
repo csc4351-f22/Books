@@ -1,6 +1,16 @@
+html{
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background-color: rgb(245, 239, 233);
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  padding-bottom: 180px;
+  box-sizing: inherit;
 }
 
 h1{
@@ -33,15 +43,15 @@ img {
 }
 
 .search-wrap {
-  padding: 50px;
+  padding: 40px;
   margin: 30px 0 30px 0;
 }
 
 .search-library button{
-  padding: 6px 40px;
+  padding: 6px 30px;
   border: 1px solid #b5b6b8;
   border-radius: 5px;
-  background-color: #e4daaf;
+  background-color: rgb(228, 153, 126);
   color: rgb(51, 47, 43);
 }
 
@@ -91,4 +101,17 @@ form.delete input[type="submit"]{
 
 }
 
-
+.about-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/static/images/book-pic.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  color: white;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
+  
+  
+}
